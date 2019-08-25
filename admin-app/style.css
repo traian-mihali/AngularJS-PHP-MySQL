@@ -1,0 +1,9 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.form-control.ng-dirty.ng-invalid {
+  border: 2px solid rgb(236, 143, 143);
+  box-shadow: 0 0 0 0.2rem rgba(219, 96, 137, 0.596);
+}
