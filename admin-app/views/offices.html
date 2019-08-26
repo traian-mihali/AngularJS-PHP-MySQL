@@ -55,7 +55,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="office in data | filter:search as results">
+    <tr
+      ng-repeat="office in data | orderBy:'-office_id' | filter:search as results"
+    >
       <td>{{ office.office_id }}</td>
       <td>{{ office.office_name }}</td>
       <td><button class="btn btn-primary btn-sm">Update</button></td>

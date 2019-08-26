@@ -11,7 +11,7 @@ $value = $data->value;
 $query = "INSERT INTO $table ($key) VALUES ('$value')";
 
 if ($connection->query($query)) {
-    $newQuery = "SELECT * FROM $table";
+    $newQuery = "SELECT * FROM $table ORDER BY '$key' DESC";
     $output = $connection->query($newQuery)->fetchAll();
 }
 echo json_encode($output);

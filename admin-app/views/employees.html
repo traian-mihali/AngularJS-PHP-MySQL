@@ -42,7 +42,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="employee in data | filter:search ">
+    <tr ng-repeat="employee in data | orderBy:'-employee_id' | filter:search ">
       <td>{{ employee.first_name }}</td>
       <td>{{ employee.last_name }}</td>
       <td>{{ employee.email }}</td>

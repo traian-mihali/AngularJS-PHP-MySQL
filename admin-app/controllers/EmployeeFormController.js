@@ -32,10 +32,7 @@ function EmployeeFormController($scope, $location, load, insert) {
     };
 
     insert.insert("services/php/insertEmployee.php", body).then(data => {
-      if (data) {
-        $scope.redirectTo("/employees");
-        console.log(data);
-      }
+      $scope.redirectTo("/employees");
     });
   };
 }
