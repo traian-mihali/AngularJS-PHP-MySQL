@@ -2,6 +2,8 @@
 
 include_once 'dbConnection.php';
 
+session_start();
+
 $form_data = json_decode(file_get_contents('php://input'));
 
 $message = "";
@@ -40,9 +42,13 @@ if (empty($error)) {
     $validation_error = implode(", ", $error);
 }
 
+$_SESSION['name'] = $form_data->name;
+$_SESSION['email'] = $form_data->email;
+
 $output = array(
     "error" => $validation_error,
-    "message" => $message
+    "message" => $message,
+    "session_data" => $_SESSION
 );
 
 echo json_encode($output);

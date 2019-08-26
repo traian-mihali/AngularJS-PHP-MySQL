@@ -1,13 +1,13 @@
 <div class="jumbotron">
-  <h1 class="display-4">Departments</h1>
+  <h1 class="display-4">{{ header }}</h1>
   <hr class="my-4" />
-  <p class="lead">You can log out by using the button below</p>
+  <p class="lead">{{ body }}</p>
 
   <a
     href=""
     class="btn btn-primary btn-lg"
     role="button"
-    ng-click="redirectTo()"
+    ng-click="loggingOut()"
     >Logout</a
   >
 </div>
@@ -23,7 +23,7 @@
       </div>
       <div class="card-footer">
         <small class="text-muted">
-          <button class="btn btn-primary" ng-click="redirectToOffices()">
+          <button class="btn btn-primary" ng-click="redirectTo('offices')">
             Access
           </button>
         </small>
@@ -32,14 +32,14 @@
   </div>
 
   <div class="col-sm-3">
-    <div class="card text-center" style="width: 19rem; height: 19rem">
+    <div class="card text-left" style="width: 19rem; height: 19rem">
       <div class="card-body">
         <h5 class="card-title">Departments</h5>
         <p class="card-text">This section supports all the CRUD operations</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
-          <button class="btn btn-primary" ng-click="redirectToDepartments()">
+          <button class="btn btn-primary" ng-click="redirectTo('departments')">
             Enter
           </button>
         </small>
@@ -48,7 +48,7 @@
   </div>
 
   <div class="col-sm-3">
-    <div class="card text-center" style="width: 19rem; height: 19rem">
+    <div class="card text-left" style="width: 19rem; height: 19rem">
       <div class="card-body">
         <h5 class="card-title">Employees</h5>
         <p class="card-text">
@@ -57,7 +57,7 @@
       </div>
       <div class="card-footer">
         <small class="text-muted">
-          <button class="btn btn-primary" ng-click="redirectToEmployees()">
+          <button class="btn btn-primary" ng-click="redirectTo('employees')">
             Visit
           </button>
         </small>
@@ -66,7 +66,7 @@
   </div>
 
   <div class="col-sm-3">
-    <div class="card text-right" style="width: 19rem; height: 19rem">
+    <div class="card text-left" style="width: 19rem; height: 19rem">
       <div class="card-body">
         <h5 class="card-title">Salaries</h5>
         <p class="card-text">
@@ -75,7 +75,7 @@
       </div>
       <div class="card-footer">
         <small class="text-muted">
-          <button class="btn btn-primary" ng-click="redirectToSalaries()">
+          <button class="btn btn-primary" ng-click="redirectTo('salaries')">
             Spend
           </button>
         </small>

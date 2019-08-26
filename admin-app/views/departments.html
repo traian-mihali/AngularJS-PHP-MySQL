@@ -9,4 +9,71 @@
     ng-click="redirectTo()"
     >Back</a
   >
+
+  <a
+    href=""
+    class="btn btn-primary btn-lg m-3"
+    role="button"
+    ng-click="showInput()"
+    >Add New Department</a
+  >
+
+  <div ng-show="visible">
+    <form>
+      <div class="form-group">
+        <label for="departmentName">Department Name</label>
+        <input
+          type="text"
+          id="departmentName"
+          class="form-control"
+          ng-model="departmentName"
+        />
+        <button
+          type="submit"
+          class="btn btn-primary my-2"
+          ng-click="addDepartment(departmentName)"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
+
+<input
+  type="text"
+  class="form-control"
+  ng-model="search.$"
+  placeholder="Search..."
+/>
+
+<table class="table" ng-show="data && Object.values(data).length !== 0">
+  <thead>
+    <tr>
+      <th scope="col">Department Id</th>
+      <th scope="col">Department</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="department in data | filter:search as results">
+      <td>{{ department.department_id }}</td>
+      <td>{{ department.name }}</td>
+      <td><button class="btn btn-primary btn-sm">Update</button></td>
+      <td>
+        <button
+          class="btn btn-danger btn-sm"
+          ng-click="deleteDepartment(department.department_id)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tr>
+    <td ng-if="results.length === 0">
+      No results found..
+    </td>
+  </tr>
+</table>

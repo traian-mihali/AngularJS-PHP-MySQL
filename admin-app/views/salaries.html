@@ -9,4 +9,75 @@
     ng-click="redirectTo()"
     >Back</a
   >
+
+  <a
+    href=""
+    class="btn btn-primary btn-lg m-3"
+    role="button"
+    ng-click="showInput()"
+    >Add Salary</a
+  >
+
+  <div ng-show="visible">
+    <form ng-submit="addSalary()">
+      <div class="form-group">
+        <label for="grossIncome">Add Monthly Gross Income</label>
+        <input
+          type="text"
+          name="grossIncome"
+          id="grossIncome"
+          class="form-control"
+          ng-model="salary.grossIncome"
+        />
+      </div>
+      <div class="formm-group">
+        <label for="netIncome">Add Monthly Net Income</label>
+        <input
+          name="netIncome"
+          type="text"
+          id="netIncome"
+          class="form-control"
+          ng-model="salary.netIncome"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary my-2"
+        ng-disabled="!salary.netIncome && !salary.grossIncome"
+      >
+        Done
+      </button>
+    </form>
+  </div>
 </div>
+
+<input
+  type="text"
+  class="form-control"
+  ng-model="search.$"
+  placeholder="Search..."
+/>
+
+<table class="table" ng-show="data && Object.values(data).length !== 0">
+  <thead>
+    <tr>
+      <th scope="col">Salary Id</th>
+      <th scope="col">Monthly Gross Income</th>
+      <th scope="col">Monthly Net Income</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="salary in data  | filter:search as results">
+      <td>{{ salary.salary_id }}</td>
+      <td>{{ salary.monthly_gross_income | currency }}</td>
+      <td>{{ salary.netIncome | currency }}</td>
+      <td><button class="btn btn-primary btn-sm">Update</button></td>
+    </tr>
+  </tbody>
+  <tr>
+    <td ng-if="results.length === 0">
+      No results found..
+    </td>
+  </tr>
+</table>

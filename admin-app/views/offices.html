@@ -9,4 +9,69 @@
     ng-click="redirectTo()"
     >Back</a
   >
+
+  <a
+    href=""
+    class="btn btn-primary btn-lg m-3"
+    role="button"
+    ng-click="showInput()"
+    >Add New Office</a
+  >
+  <div ng-show="visible">
+    <form>
+      <div class="form-group">
+        <label for="officeName">Office Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="officeName"
+          ng-model="officeName"
+        />
+        <button
+          type="submit"
+          class="btn btn-primary my-2"
+          ng-click="addOffice(officeName)"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
+
+<input
+  type="text"
+  class="form-control"
+  ng-model="search.$"
+  placeholder="Search..."
+/>
+
+<table class="table" ng-show="data">
+  <thead>
+    <tr>
+      <th scope="col">Office Id</th>
+      <th scope="col">Office</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="office in data | filter:search as results">
+      <td>{{ office.office_id }}</td>
+      <td>{{ office.office_name }}</td>
+      <td><button class="btn btn-primary btn-sm">Update</button></td>
+      <td>
+        <button
+          class="btn btn-danger btn-sm m-6"
+          ng-click="deleteOffice(office.office_id)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tr>
+    <td ng-if="results.length === 0">
+      No results found..
+    </td>
+  </tr>
+</table>

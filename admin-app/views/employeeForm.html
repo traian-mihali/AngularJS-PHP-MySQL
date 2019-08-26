@@ -1,0 +1,136 @@
+<div class="jumbotron">
+  <h1 class="display-4">Employee Form</h1>
+  <hr class="my-4" />
+
+  <a
+    href=""
+    class="btn btn-primary btn-lg"
+    role="button"
+    ng-click="redirectTo('/employees')"
+    >Back</a
+  >
+</div>
+
+<form novalidate name="employeeForm" ng-submit="insertEmployee()">
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="firstname">First name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstname"
+        placeholder="First name"
+        name="firstname"
+        ng-model="employee.firstname"
+        required
+      />
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="lastname">Last name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastname"
+        placeholder="Last name"
+        name="lastname"
+        ng-model="employee.lastname"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="email">Email</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">@</span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          placeholder="Email"
+          name="email"
+          required
+          ng-model="employee.email"
+        />
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="Birthdate">Birthdate</label>
+      <input
+        type="date"
+        class="form-control"
+        id="Birthdate"
+        placeholder="Birthdate"
+        ng-model="employee.birthdate"
+        name="birthdate"
+      />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="manager">Manager</label>
+      <input
+        type="number"
+        min="0"
+        max="1"
+        class="form-control"
+        id="manager"
+        placeholder="Manager Status"
+        ng-model="employee.manager"
+        name="manager"
+      />
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="salary">Monthly Gross Income</label>
+      <select
+        required
+        id="salary"
+        ng-model="employee.salary"
+        class="custom-select"
+      >
+        <option ng-repeat="salary in salaries">{{
+          salary.monthly_gross_income
+        }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="offices">Offices</label>
+      <select
+        required
+        id="offices"
+        ng-model="employee.office"
+        class="custom-select"
+      >
+        <option ng-repeat="office in offices ">{{ office.office_name }}</option>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="departments">Departments</label>
+      <select
+        id="departments"
+        ng-model="employee.department"
+        class="custom-select"
+        required
+      >
+        <option ng-repeat="department in departments">{{
+          department.name
+        }}</option>
+      </select>
+    </div>
+  </div>
+  <button
+    class="btn btn-primary"
+    type="submit"
+    ng-disabled="employeeForm.$invalid"
+  >
+    Insert
+  </button>
+</form>

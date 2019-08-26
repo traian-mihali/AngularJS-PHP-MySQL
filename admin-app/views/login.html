@@ -49,6 +49,9 @@
       >
         Password is required
       </div>
+      <div class="alert alert-danger" ng-show="invalidSubmit">
+        Invalid Username and/or Password
+      </div>
     </div>
     <button
       type="submit"
@@ -57,8 +60,5 @@
     >
       Submit
     </button>
-    <span class="alert alert-danger" ng-show="invalidSubmit">
-      Invalid Username and/or Password
-    </span>
   </form>
 </div>

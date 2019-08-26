@@ -44,6 +44,8 @@ if (empty($error)) {
     $validation_error = implode(", ", $error);
 }
 
-$output = array('error'=> $validation_error);
+$_SESSION['email'] = $form_data->email;
+
+$output = array('error'=> $validation_error, 'session_data'=> $_SESSION);
 
 echo json_encode($output);

@@ -1,8 +1,8 @@
 angular.module("MyAdmin").factory(
   "login",
 
-  function login($http) {
-    function login(data) {
+  function($http) {
+    function loggingIn(data) {
       return $http({
         method: "POST",
         url: "services/php/login.php",
@@ -13,7 +13,7 @@ angular.module("MyAdmin").factory(
     }
 
     return {
-      login: login
+      login: loggingIn
     };
   }
 );
