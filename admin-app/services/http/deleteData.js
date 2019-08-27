@@ -1,5 +1,5 @@
 angular.module("MyAdmin").factory("deleteData", function($http) {
-  function deletingData(url, data) {
+  function deleteData(url, data) {
     return $http
       .post(url, data)
       .then(res => res.data)
@@ -7,6 +7,6 @@ angular.module("MyAdmin").factory("deleteData", function($http) {
   }
 
   return {
-    delete: deletingData
+    delete: deleteData
   };
 });
