@@ -1,5 +1,5 @@
-angular.module("MyAdmin").factory("load", function($http) {
-  function load(url, table) {
+angular.module("MyAdmin").factory("loadData", function($http) {
+  function loadData(url, table) {
     return $http
       .post(url, { table: table })
       .then(res => res.data)
@@ -7,6 +7,6 @@ angular.module("MyAdmin").factory("load", function($http) {
   }
 
   return {
-    load: load
+    load: loadData
   };
 });

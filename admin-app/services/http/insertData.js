@@ -1,5 +1,5 @@
-angular.module("MyAdmin").factory("insert", function($http) {
-  function insert(url, data) {
+angular.module("MyAdmin").factory("insertData", function($http) {
+  function insertData(url, data) {
     return $http
       .post(url, data)
       .then(res => res.data)
@@ -7,6 +7,6 @@ angular.module("MyAdmin").factory("insert", function($http) {
   }
 
   return {
-    insert: insert
+    insert: insertData
   };
 });
