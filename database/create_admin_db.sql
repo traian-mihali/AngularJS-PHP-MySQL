@@ -35,16 +35,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `admin`.`salaries`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `admin`.`salaries` (
-  `salary_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `monthly_gross_income` DECIMAL(6,2) NOT NULL,
-  PRIMARY KEY (`salary_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `admin`.`employees`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin`.`employees` (
@@ -53,19 +43,14 @@ CREATE TABLE IF NOT EXISTS `admin`.`employees` (
   `last_name` VARCHAR(50) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `birthdate` DATE NULL DEFAULT NULL,
-  `is_manager` TINYINT NULL,
-  `salary_id` INT(11) NOT NULL,
+  `salary` DECIMAL(8,2) NOT NULL,
+  `is_manager` TINYINT NULL DEFAULT 0,
   `office_id` INT(11) NOT NULL,
   `department_id` INT(11) NOT NULL,
   PRIMARY KEY (`employee_id`),
-  INDEX `fk_employees_salaries1_idx` (`salary_id` ASC) VISIBLE,
   INDEX `fk_employees_offices1_idx` (`office_id` ASC) VISIBLE,
   INDEX `fk_employees_departments1_idx` (`department_id` ASC) VISIBLE,
-  CONSTRAINT `fk_employees_salaries1`
-    FOREIGN KEY (`salary_id`)
-    REFERENCES `admin`.`salaries` (`salary_id`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_employees_offices1`
     FOREIGN KEY (`office_id`)
     REFERENCES `admin`.`offices` (`office_id`)
@@ -74,6 +59,24 @@ CREATE TABLE IF NOT EXISTS `admin`.`employees` (
   CONSTRAINT `fk_employees_departments1`
     FOREIGN KEY (`department_id`)
     REFERENCES `admin`.`departments` (`department_id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `admin`.`monthly_income`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admin`.`monthly_income` (
+  `monthly_income_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `month` VARCHAR(50) NOT NULL,
+  `gross_income` DECIMAL(8,2) NOT NULL,
+  `employee_id` INT(11) NOT NULL,
+  PRIMARY KEY (`monthly_income_id`),
+  INDEX `fk_monthly_income_employees1_idx` (`employee_id` ASC) VISIBLE,
+  CONSTRAINT `fk_monthly_income_employees1`
+    FOREIGN KEY (`employee_id`)
+    REFERENCES `admin`.`employees` (`employee_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
