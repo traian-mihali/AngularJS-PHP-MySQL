@@ -1,49 +1,81 @@
 <div class="jumbotron">
-  <h1 class="display-4">Salaries</h1>
+  <h1 class="display-4">Salaries Section</h1>
   <hr class="my-4" />
 
   <a
     href=""
-    class="btn btn-primary btn-lg"
+    class="btn btn-primary btn-md"
     role="button"
-    ng-click="redirectTo()"
+    ng-click="redirectTo('/preview')"
     >Back</a
   >
 
   <a
     href=""
-    class="btn btn-primary btn-lg m-3"
+    class="btn btn-primary btn-md m-3"
     role="button"
     ng-click="showInput()"
     >Add Salary</a
   >
 
   <div ng-show="visible">
-    <form ng-submit="addSalary()">
-      <div class="form-group">
-        <label for="grossIncome">Add Monthly Gross Income</label>
-        <input
-          type="text"
-          name="grossIncome"
-          id="grossIncome"
-          class="form-control"
-          ng-model="salary.grossIncome"
-        />
+    <form name="form" ng-submit="addSalary()">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="monthYear">Month - Year</label>
+          <input
+            type="month"
+            name="monthYear"
+            id="monthYear"
+            class="form-control"
+            ng-model="salary.monthYear"
+            required
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="salary.employee">Employee</label>
+          <select
+            name="salary.employee"
+            type="text"
+            id="salary.employee"
+            class="form-control"
+            ng-model="salary.employee"
+            required
+          >
+            <option value=""></option>
+            <option ng-repeat="employee in employees track by $index">{{
+              employee.full_name
+            }}</option>
+          </select>
+        </div>
       </div>
-      <div class="formm-group">
-        <label for="netIncome">Add Monthly Net Income</label>
-        <input
-          name="netIncome"
-          type="text"
-          id="netIncome"
-          class="form-control"
-          ng-model="salary.netIncome"
-        />
+
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="grossIncome">Add Monthly Gross Income</label>
+          <input
+            type="text"
+            name="grossIncome"
+            id="grossIncome"
+            class="form-control"
+            ng-model="salary.grossIncome"
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="netIncome">Add Monthly Net Income</label>
+          <input
+            name="netIncome"
+            type="text"
+            id="netIncome"
+            class="form-control"
+            ng-model="salary.netIncome"
+          />
+        </div>
       </div>
       <button
         type="submit"
         class="btn btn-primary my-2"
-        ng-disabled="!salary.netIncome && !salary.grossIncome"
+        ng-disabled="form.$invalid"
       >
         Done
       </button>
@@ -58,23 +90,33 @@
   placeholder="Search..."
 />
 
-<table class="table" ng-show="data && Object.values(data).length !== 0">
+<table class="table" ng-show="data">
   <thead>
     <tr>
-      <th scope="col">Salary Id</th>
-      <th scope="col">Monthly Gross Income</th>
-      <th scope="col">Monthly Net Income</th>
+      <th scope="col">Month - Year</th>
+      <th scope="col">Gross Income</th>
+      <th scope="col">Net Income</th>
+      <th scope="col">Employee</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
     <tr
-      ng-repeat="salary in data | orderBy:'-salary_id' | filter:search as results"
+      ng-repeat="salary in data  | orderBy:'-monthly_income_id' | filter:search as results"
     >
-      <td>{{ salary.salary_id }}</td>
-      <td>{{ salary.monthly_gross_income | currency }}</td>
-      <td>{{ salary.netIncome | currency }}</td>
-      <td><button class="btn btn-primary btn-sm">Update</button></td>
+      <td>{{ salary.month_year | date | ifnull }}</td>
+      <td>{{ salary.gross_income | currency: $ | ifnull }}</td>
+      <td>{{ salary.netIncome | currency: $ | ifnull }}</td>
+      <td>{{ salary.full_name }}</td>
+      <td>
+        <button
+          class="btn btn-primary btn-sm"
+          ng-click="redirectTo(salary.employee_id)"
+          ng-disabled="!salary.monthly_income_id"
+        >
+          Update
+        </button>
+      </td>
     </tr>
   </tbody>
   <tr>

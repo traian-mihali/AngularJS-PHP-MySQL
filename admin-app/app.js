@@ -28,6 +28,10 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: "views/departments.html",
       controller: "controllers/DepartmentsController"
     })
+    .when("/departments/:id", {
+      templateUrl: "views/departmentForm.html",
+      controller: "controllers/DepartmentsController"
+    })
     .when("/employees", {
       templateUrl: "views/employees.html",
       controller: "controllers/EmployeesController"
@@ -36,9 +40,17 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: "views/employeeForm.html",
       controller: "controllers/EmployeeFormController"
     })
+    .when("/employees/:id", {
+      templateUrl: "views/employeeForm.html",
+      controller: "controllers/EmployeeFormUpdateController"
+    })
     .when("/salaries", {
       templateUrl: "views/salaries.html",
       controller: "controllers/SalariesController"
+    })
+    .when("/salaries/:id", {
+      templateUrl: "views/salaryForm.html",
+      controller: "controllers/SalaryFormController"
     })
     .when("/not-found", {
       templateUrl: "views/404.html",

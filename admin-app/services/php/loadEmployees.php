@@ -9,13 +9,12 @@ $query = 'SELECT
     email, 
     birthdate, 
     is_manager, 
-    s.monthly_gross_income, 
     o.office_name, 
     d.name
 FROM employees 
 LEFT JOIN departments d USING(department_id)
-LEFT JOIN salaries s USING(salary_id)
-LEFT JOIN offices o USING(office_id)';
+LEFT JOIN offices o USING (office_id)
+ORDER BY employee_id ASC';
 
 $output = $connection->query($query)->fetchAll();
 

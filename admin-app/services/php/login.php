@@ -32,6 +32,7 @@ if (empty($error)) {
             foreach ($result as $row) {
                 if (password_verify($form_data->password, $row['password'])) {
                     $_SESSION["name"] = $row["name"];
+                    $_SESSION['email'] = $form_data->email;
                 } else {
                     $validation_error = "Invalid Password";
                 }
@@ -44,7 +45,6 @@ if (empty($error)) {
     $validation_error = implode(", ", $error);
 }
 
-$_SESSION['email'] = $form_data->email;
 
 $output = array('error'=> $validation_error, 'session_data'=> $_SESSION);
 

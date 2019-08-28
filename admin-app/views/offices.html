@@ -1,10 +1,10 @@
 <div class="jumbotron">
-  <h1 class="display-4">Offices</h1>
+  <h1 class="display-4">Offices Section</h1>
   <hr class="my-4" />
 
   <a
     href=""
-    class="btn btn-primary btn-lg"
+    class="btn btn-primary btn-md"
     role="button"
     ng-click="redirectTo()"
     >Back</a
@@ -12,7 +12,7 @@
 
   <a
     href=""
-    class="btn btn-primary btn-lg m-3"
+    class="btn btn-primary btn-md m-3"
     role="button"
     ng-click="showInput()"
     >Add New Office</a
@@ -49,8 +49,8 @@
 <table class="table" ng-show="data">
   <thead>
     <tr>
-      <th scope="col">Office Id</th>
       <th scope="col">Office</th>
+      <th scope="col"></th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -58,9 +58,31 @@
     <tr
       ng-repeat="office in data | orderBy:'-office_id' | filter:search as results"
     >
-      <td>{{ office.office_id }}</td>
       <td>{{ office.office_name }}</td>
-      <td><button class="btn btn-primary btn-sm">Update</button></td>
+      <form>
+        <div class="form-group">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              ng-model="office.name"
+              placeholder="Update Office Name"
+              required
+            />
+          </td>
+          <td>
+            <button
+              type="submit"
+              class="btn btn-primary btn-sm"
+              ng-click="updateOffice(office)"
+            >
+              Update
+            </button>
+          </td>
+        </div>
+      </form>
+
       <td>
         <button
           class="btn btn-danger btn-sm m-6"

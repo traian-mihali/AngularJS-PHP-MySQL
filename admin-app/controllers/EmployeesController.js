@@ -2,13 +2,17 @@ angular
   .module("MyAdmin")
   .controller("controllers/EmployeesController", EmployeesController);
 
-function EmployeesController($scope, $location, load, deleteData) {
-  $scope.redirectTo = function(path) {
-    $location.path(path);
+function EmployeesController($scope, $location, loadData, deleteData) {
+  $scope.redirectTo = function(param) {
+    if (typeof param === "number") {
+      let path = "/employees/" + param;
+      $location.path(path);
+    } else {
+      $location.path(param);
+    }
   };
 
-  load.load("services/php/loadEmployees.php").then(data => {
-    console.log("data", data);
+  loadData.load("services/php/loadEmployees.php").then(data => {
     $scope.data = data;
   });
 

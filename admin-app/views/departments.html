@@ -1,18 +1,18 @@
 <div class="jumbotron">
-  <h1 class="display-4">Departments</h1>
+  <h1 class="display-4">Departments Section</h1>
   <hr class="my-4" />
 
   <a
     href=""
-    class="btn btn-primary btn-lg"
+    class="btn btn-primary btn-md"
     role="button"
-    ng-click="redirectTo()"
+    ng-click="redirectTo('/preview')"
     >Back</a
   >
 
   <a
     href=""
-    class="btn btn-primary btn-lg m-3"
+    class="btn btn-primary btn-md m-3"
     role="button"
     ng-click="showInput()"
     >Add New Department</a
@@ -26,17 +26,34 @@
           type="text"
           id="departmentName"
           class="form-control"
-          ng-model="departmentName"
+          ng-model="department.name"
+          name="department"
+          placeholder="Enter the Department"
         />
-        <button
-          type="submit"
-          class="btn btn-primary my-2"
-          ng-click="addDepartment(departmentName)"
+      </div>
+      <div class="form-group">
+        <label for="offices">Select the related Offices</label>
+        <select
+          ng-model="department.offices"
+          multiple
+          name="office"
+          class="form-control"
+          id="offices"
         >
-          Done
-        </button>
+          <option value=""></option>
+          <option ng-repeat="office in offices track by $index">{{
+            office.office_name
+          }}</option>
+        </select>
       </div>
     </form>
+    <button
+      type="submit"
+      class="btn btn-primary my-2"
+      ng-click="addDepartment(department)"
+    >
+      Done
+    </button>
   </div>
 </div>
 
@@ -47,26 +64,36 @@
   placeholder="Search..."
 />
 
-<table class="table" ng-show="data && Object.values(data).length !== 0">
+<table class="table" ng-show="data ">
   <thead>
     <tr>
-      <th scope="col">Department Id</th>
       <th scope="col">Department</th>
+      <th scope="col">Offices per Department</th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr
-      ng-repeat="department in data | orderBy:'-department_id' | filter:search as results"
-    >
-      <td>{{ department.department_id }}</td>
-      <td>{{ department.name }}</td>
-      <td><button class="btn btn-primary btn-sm">Update</button></td>
+    <tr ng-repeat="d in data | orderBy:'-department_id' | filter:search">
+      <td>{{ d.name | ifnull }}</td>
+      <td>
+        <select class="custom-select">
+          <option selected>View Offices</option>
+          <option ng-repeat="office in d.offices">{{ office | ifnull }}</option>
+        </select>
+      </td>
+      <td>
+        <button
+          class="btn btn-primary btn-sm"
+          ng-click="redirectTo(d.department_id)"
+        >
+          Update
+        </button>
+      </td>
       <td>
         <button
           class="btn btn-danger btn-sm"
-          ng-click="deleteDepartment(department.department_id)"
+          ng-click="deleteDepartment(d.department_id)"
         >
           Delete
         </button>

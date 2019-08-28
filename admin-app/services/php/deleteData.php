@@ -11,7 +11,14 @@ $value = $info->value;
 $query = "DELETE FROM $table WHERE $key = $value";
 
 if ($connection->query($query)) {
-    $output = $connection->query("SELECT * FROM $table")->fetchAll();
+    switch ($table) {
+        case "departments":
+            include_once 'loadDepartments.php';
+            return;
+        case "employees":
+            include_once "loadEmployees.php";
+            return;
+        default:
+            include_once 'loadData.php';
+    }
 }
-
-echo json_encode($output);

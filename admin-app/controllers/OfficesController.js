@@ -2,7 +2,14 @@ angular
   .module("MyAdmin")
   .controller("controllers/OfficesController", OfficesController);
 
-function OfficesController($scope, $location, load, insert, deleteData) {
+function OfficesController(
+  $scope,
+  $location,
+  loadData,
+  insertData,
+  updateData,
+  deleteData
+) {
   $scope.redirectTo = function() {
     $location.path("/preview");
   };
@@ -11,12 +18,12 @@ function OfficesController($scope, $location, load, insert, deleteData) {
     $scope.visible = !$scope.visible;
   };
 
-  load.load("services/php/loadData.php", "offices").then(data => {
+  loadData.load("services/php/loadData.php", "offices").then(data => {
     $scope.data = data;
   });
 
   $scope.addOffice = function(officeName) {
-    insert
+    insertData
       .insert("services/php/insertData.php", {
         table: "offices",
         key: "office_name",
@@ -27,6 +34,22 @@ function OfficesController($scope, $location, load, insert, deleteData) {
         $scope.data = data;
         $scope.officeName = "";
       });
+  };
+
+  $scope.updateOffice = function(office) {
+    if (office.name) {
+      let body = {};
+      body.table = "offices";
+      body.id = office.office_id;
+      body.key = "office_name";
+      body.value = office.name;
+
+      updateData.update("services/php/updateData.php", body).then(data => {
+        $scope.data = data;
+      });
+    } else {
+      alert("No Value provided");
+    }
   };
 
   $scope.deleteOffice = function(id) {

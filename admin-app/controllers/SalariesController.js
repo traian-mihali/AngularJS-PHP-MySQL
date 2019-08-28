@@ -2,39 +2,61 @@ angular
   .module("MyAdmin")
   .controller("controllers/SalariesController", SalariesController);
 
-function SalariesController($scope, $location, load, insert) {
-  $scope.redirectTo = function() {
-    $location.path("/preview");
+function SalariesController($scope, $location, loadData, insertData) {
+  $scope.redirectTo = function(param) {
+    if (typeof param === "number") {
+      let path = "/salaries/" + param;
+      $location.path(path);
+    } else {
+      $location.path(param);
+    }
   };
 
   $scope.showInput = function() {
     $scope.visible = !$scope.visible;
   };
 
-  load.load("services/php/loadData.php", "salaries").then(data => {
-    $scope.data = data;
-    $scope.calculeNetIncome();
-  });
+  loadData
+    .load("services/php/loadSalaries.php", "monthly_income")
+    .then(data => {
+      $scope.data = data;
+      $scope.calculeNetIncome();
+    });
+
+  loadData
+    .load("services/php/loadEmployeesWithoutASalary.php", "employees")
+    .then(data => {
+      $scope.employees = data;
+    });
+
+  $scope.getNetIncome = function(gross) {
+    return (gross * 60) / (100).toFixed(2);
+  };
 
   $scope.calculeNetIncome = function() {
-    $scope.data &&
+    if ($scope && $scope.data) {
+      for (let salary of $scope.data) {
+      }
       $scope.data.forEach(salary => {
-        salary.netIncome = String((salary.monthly_gross_income * 60) / 100);
+        salary.netIncome = ((salary.gross_income * 60) / 100).toFixed(2);
       });
+    }
   };
 
   $scope.addSalary = function() {
-    if (!$scope.salary.grossIncome && !$scope.salary.netIncome) return;
+    if (!$scope.salary.grossIncome && !$scope.salary.netIncome) {
+      alert("Please enter an amount");
+      return;
+    }
 
     if (!$scope.salary.grossIncome)
-      $scope.salary.grossIncome = ($scope.salary.netIncome * 100) / 60;
+      $scope.salary.grossIncome = (
+        ($scope.salary.netIncome * 100) /
+        60
+      ).toFixed(2);
 
-    insert
-      .insert("services/php/insertData.php", {
-        table: "salaries",
-        key: "monthly_gross_income",
-        value: $scope.salary.grossIncome
-      })
+    insertData
+      .insert("services/php/insertSalaries.php", $scope.salary)
       .then(data => {
         $scope.visible = false;
         $scope.data = data;

@@ -1,0 +1,49 @@
+<div class="jumbotron">
+  <h1 class="display-4">Department Form</h1>
+  <hr class="my-4" />
+
+  <a
+    href=""
+    class="btn btn-primary btn-md"
+    role="button"
+    ng-click="redirectTo('/departments')"
+    >Back</a
+  >
+</div>
+
+<form>
+  <div class="form-group">
+    <label for="departmentName">Department Name</label>
+    <input
+      type="text"
+      id="departmentName"
+      class="form-control"
+      ng-model="department.name"
+      name="department"
+    />
+  </div>
+  <div class="form-group">
+    <label for="offices"
+      >Select extra Offices or remove the ones already selected</label
+    >
+    <select
+      ng-model="department.offices"
+      multiple
+      name="office"
+      class="form-control"
+      id="offices"
+    >
+      <option value=""></option>
+      <option ng-repeat="office in offices track by $index">{{
+        office.office_name
+      }}</option>
+    </select>
+  </div>
+</form>
+<button
+  type="submit"
+  class="btn btn-primary my-2"
+  ng-click="updateDepartment(department)"
+>
+  Update
+</button>

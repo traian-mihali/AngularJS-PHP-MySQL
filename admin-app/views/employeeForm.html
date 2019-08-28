@@ -4,24 +4,23 @@
 
   <a
     href=""
-    class="btn btn-primary btn-lg"
+    class="btn btn-primary btn-md"
     role="button"
     ng-click="redirectTo('/employees')"
     >Back</a
   >
 </div>
 
-<form novalidate name="employeeForm" ng-submit="insertEmployee()">
+<form name="employeeForm" ng-submit="submit()" novalidate>
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="firstname">First name</label>
       <input
         type="text"
         class="form-control"
-        id="firstname"
-        placeholder="First name"
+        placeholder="First Name"
         name="firstname"
-        ng-model="employee.firstname"
+        ng-model="employee.first_name"
         required
       />
     </div>
@@ -32,16 +31,16 @@
         type="text"
         class="form-control"
         id="lastname"
-        placeholder="Last name"
+        placeholder="Last Name"
         name="lastname"
-        ng-model="employee.lastname"
+        ng-model="employee.last_name"
         required
       />
     </div>
   </div>
 
   <div class="form-row">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-8 mb-3">
       <label for="email">Email</label>
       <div class="input-group">
         <div class="input-group-prepend">
@@ -50,87 +49,81 @@
         <input
           type="text"
           class="form-control"
-          id="email"
           placeholder="Email"
           name="email"
-          required
           ng-model="employee.email"
+          required
         />
       </div>
     </div>
-    <div class="col-md-6 mb-3">
+
+    <div class="col-md-4 mb-3">
       <label for="Birthdate">Birthdate</label>
       <input
         type="date"
         class="form-control"
-        id="Birthdate"
+        name="birthdate"
         placeholder="Birthdate"
         ng-model="employee.birthdate"
-        name="birthdate"
+        required
       />
     </div>
   </div>
 
   <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="manager">Manager</label>
-      <input
-        type="number"
-        min="0"
-        max="1"
-        class="form-control"
-        id="manager"
-        placeholder="Manager Status"
-        ng-model="employee.manager"
-        name="manager"
-      />
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="salary">Monthly Gross Income</label>
-      <select
-        required
-        id="salary"
-        ng-model="employee.salary"
-        class="custom-select"
-      >
-        <option ng-repeat="salary in salaries">{{
-          salary.monthly_gross_income
-        }}</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="offices">Offices</label>
-      <select
-        required
-        id="offices"
-        ng-model="employee.office"
-        class="custom-select"
-      >
-        <option ng-repeat="office in offices ">{{ office.office_name }}</option>
-      </select>
-    </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-8 mb-3">
       <label for="departments">Departments</label>
       <select
         id="departments"
-        ng-model="employee.department"
+        ng-model="employee.name"
         class="custom-select"
         required
       >
-        <option ng-repeat="department in departments">{{
+        <option value=""></option>
+        <option ng-repeat="department in departments track by $index">{{
           department.name
         }}</option>
       </select>
     </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="manager">Manager</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Yes/No"
+        ng-model="employee.is_manager"
+        name="manager"
+        required
+      />
+    </div>
   </div>
-  <button
-    class="btn btn-primary"
-    type="submit"
-    ng-disabled="employeeForm.$invalid"
-  >
-    Insert
-  </button>
+
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="offices">Offices</label>
+      <select
+        required
+        id="offices"
+        ng-model="employee.office_name"
+        class="custom-select"
+      >
+        <option value=""></option>
+        <option ng-repeat="office in offices track by $index ">{{
+          office.office_name
+        }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" ng-show="error">{{ error }}</div>
+  <div class="form-row">
+    <button
+      class="btn btn-primary col-md-12 mb-3"
+      type="submit"
+      ng-disabled="employeeForm.$invalid"
+    >
+      Submit
+    </button>
+  </div>
 </form>
