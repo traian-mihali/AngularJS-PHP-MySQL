@@ -6,7 +6,7 @@ $info = json_decode(file_get_contents("php://input"));
 
 $table = $info->table;
 
-$query = "SELECT * FROM $table";
+$query = "SELECT DISTINCT * FROM $table";
 
 $output = $connection->query($query)->fetchAll();
 

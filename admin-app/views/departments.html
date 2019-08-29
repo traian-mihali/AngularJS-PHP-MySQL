@@ -9,7 +9,6 @@
     ng-click="redirectTo('/preview')"
     >Back</a
   >
-
   <a
     href=""
     class="btn btn-primary btn-md m-3"
@@ -32,7 +31,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="offices">Select the related Offices</label>
+        <label for="offices">Select multiple options with CTRL or SHIFT</label>
         <select
           ng-model="department.offices"
           multiple
@@ -41,16 +40,17 @@
           id="offices"
         >
           <option value=""></option>
-          <option ng-repeat="office in offices track by $index">{{
-            office.office_name
-          }}</option>
+          <option
+            ng-repeat="office in offices | orderBy:'-department_id' | filter:search as results"
+            >{{ office.office_name }}</option
+          >
         </select>
       </div>
     </form>
     <button
       type="submit"
-      class="btn btn-primary my-2"
       ng-click="addDepartment(department)"
+      class="btn btn-primary my-2"
     >
       Done
     </button>
@@ -74,12 +74,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="d in data | orderBy:'-department_id' | filter:search">
+    <tr
+      ng-repeat="d in data | orderBy:'-department_id' | filter:search as results"
+    >
       <td>{{ d.name | ifnull }}</td>
       <td>
         <select class="custom-select">
           <option selected>View Offices</option>
-          <option ng-repeat="office in d.offices">{{ office | ifnull }}</option>
+          <option ng-repeat="office in d.offices track by $index">{{
+            office | ifnull
+          }}</option>
         </select>
       </td>
       <td>

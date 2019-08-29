@@ -34,9 +34,10 @@
       id="offices"
     >
       <option value=""></option>
-      <option ng-repeat="office in offices track by $index">{{
-        office.office_name
-      }}</option>
+      <option
+        ng-repeat="office in offices | orderBy:'-department_id' | filter:search as results"
+        >{{ office.office_name }}</option
+      >
     </select>
   </div>
 </form>

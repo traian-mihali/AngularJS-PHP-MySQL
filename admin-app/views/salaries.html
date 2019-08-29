@@ -19,10 +19,10 @@
   >
 
   <div ng-show="visible">
-    <form name="form" ng-submit="addSalary()">
+    <form name="form">
       <div class="form-row">
         <div class="col-md-6 mb-3">
-          <label for="monthYear">Month - Year</label>
+          <label for="monthYear">Date</label>
           <input
             type="month"
             name="monthYear"
@@ -76,6 +76,7 @@
         type="submit"
         class="btn btn-primary my-2"
         ng-disabled="form.$invalid"
+        ng-click="addDepartment(department)"
       >
         Done
       </button>

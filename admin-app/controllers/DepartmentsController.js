@@ -19,59 +19,70 @@ function DepartmentsController(
     }
   };
 
+  $scope.extractOfficeIds = function(department, offices) {
+    const officeIds = [];
+    for (let data of offices) {
+      if (department.offices.includes(data.office_name)) {
+        officeIds.push(data.office_id);
+      }
+    }
+    return officeIds;
+  };
+
   $scope.showInput = function() {
     $scope.visible = !$scope.visible;
+  };
+
+  $scope.mapDataToView = function(data) {
+    let modifiedData = [];
+
+    for (let i = 0; i < data.length; i++) {
+      let temp = { offices: [] };
+
+      for (let j = 0; j < data.length; j++) {
+        if (data[j].department_id === data[i].department_id) {
+          temp["department_id"] = data[i].department_id;
+          temp["name"] = data[i].name;
+          temp.offices = [...temp.offices, data[j].office_name];
+        }
+      }
+      modifiedData.push(temp);
+    }
+
+    let filteredData = {};
+    modifiedData.forEach(data => {
+      filteredData[data.department_id] = data;
+    });
+
+    return Object.values(filteredData);
   };
 
   loadData
     .load("services/php/loadDepartments.php", "departments")
     .then(data => {
-      $scope.data = data;
-      console.log("after departments load -> $scope.data", $scope.data);
-      $scope.modifiedData = [];
-
-      // for (let i = 0; i < data.length; i++) {
-      //   let temp = { offices: [] };
-
-      //   for (let j = 0; j < data.length; j++) {
-      //     if (data[j].department_id === data[i].department_id) {
-      //       temp["department_id"] = data[i].department_id;
-      //       temp["name"] = data[i].name;
-      //       temp.offices = [...temp.offices, data[j].office_name];
-      //     }
-      //   }
-
-      //   $scope.modifiedData.push(temp);
-      // }
+      console.log("data loaded", data);
+      $scope.data = $scope.mapDataToView(data);
     });
 
   loadData.load("services/php/loadData.php", "offices").then(data => {
     $scope.offices = data;
-    console.log("after offices load -> $scope.data", $scope.offices);
   });
 
   $scope.addDepartment = function(department) {
+    console.log("DEPARTMENT for INSERT", department);
     if (!department) {
       alert("Please specify a Department");
       return;
     }
 
-    $scope.officeIds = [];
-    if (department && department.offices) {
-      for (let data of $scope.offices) {
-        if (department.offices.includes(data.office_name)) {
-          $scope.officeIds.push(data.office_id);
-        }
-      }
-    }
+    department.officeIds = $scope.extractOfficeIds(department, $scope.offices);
 
-    department.officeIds = $scope.officeIds;
+    console.log("department before insert", department);
     insertData
       .insert("services/php/insertDepartment.php", department)
       .then(data => {
-        $scope.data = data;
-        console.log(department, " was inserted");
-        console.log("after insert -> $scope.data", $scope.data);
+        console.log("DATA after INSERT", data);
+        $scope.data = $scope.mapDataToView(data);
         $scope.department = null;
         $scope.visible = false;
       });
@@ -85,24 +96,23 @@ function DepartmentsController(
         value: departmentId
       })
       .then(data => {
-        $scope.data = data;
-        console.log(departmentId, " was deleted");
-        console.log("after delete -> $scope.data", $scope.data);
+        console.log("DATA ON DELETE", data);
+        $scope.data = $scope.mapDataToView(data);
       });
   };
 
   $scope.updateDepartment = function(department) {
     console.log(department);
     updateData
-      .update("services/php/updateData.php", {
+      .update("services/php/updateDepartment.php", {
         table: "departments",
         key: "department_id",
         value: department
       })
+
       .then(data => {
-        $scope.data = data;
-        console.log(department, " was updated");
-        console.log("after update -> $scope.data", $scope.data);
+        console.log("DATA ON UPDATE", data);
+        $scope.data = $scope.mapDataToView(data);
         $location.path("/departments");
       });
   };
