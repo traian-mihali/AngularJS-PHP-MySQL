@@ -5,11 +5,14 @@ angular
 function DepartmentsController(
   $scope,
   $location,
+  $routeParams,
   loadData,
   insertData,
   deleteData,
   updateData
 ) {
+  $scope.departmentId = parseInt($routeParams.id);
+
   $scope.redirectTo = function(param) {
     if (typeof param === "number") {
       let path = "/departments/" + param;
@@ -60,7 +63,7 @@ function DepartmentsController(
   loadData
     .load("services/php/loadDepartments.php", "departments")
     .then(data => {
-      console.log("data loaded", data);
+      console.log("[RESPONSE] DATA LOADED -> ", data);
       $scope.data = $scope.mapDataToView(data);
     });
 
@@ -69,19 +72,13 @@ function DepartmentsController(
   });
 
   $scope.addDepartment = function(department) {
-    console.log("DEPARTMENT for INSERT", department);
-    if (!department) {
-      alert("Please specify a Department");
-      return;
-    }
-
     department.officeIds = $scope.extractOfficeIds(department, $scope.offices);
 
-    console.log("department before insert", department);
+    console.log("[INPUT] DEPARTMENT INSERT -> ", department);
     insertData
       .insert("services/php/insertDepartment.php", department)
       .then(data => {
-        console.log("DATA after INSERT", data);
+        console.log("[RESPONSE] DATA ON INSERT -> ", data);
         $scope.data = $scope.mapDataToView(data);
         $scope.department = null;
         $scope.visible = false;
@@ -96,22 +93,20 @@ function DepartmentsController(
         value: departmentId
       })
       .then(data => {
-        console.log("DATA ON DELETE", data);
+        console.log("[RESPONSE] DATA ON DELET -> ", data);
         $scope.data = $scope.mapDataToView(data);
       });
   };
 
   $scope.updateDepartment = function(department) {
-    console.log(department);
+    department.departmentId = $scope.departmentId;
+    console.log("[INPUT] DEPARTMENT BEFORE UPDATE", department);
+
     updateData
-      .update("services/php/updateDepartment.php", {
-        table: "departments",
-        key: "department_id",
-        value: department
-      })
+      .update("services/php/updateDepartment.php", department)
 
       .then(data => {
-        console.log("DATA ON UPDATE", data);
+        console.log("[RESPONSE] DATA ON UPDATE -> ", data);
         $scope.data = $scope.mapDataToView(data);
         $location.path("/departments");
       });

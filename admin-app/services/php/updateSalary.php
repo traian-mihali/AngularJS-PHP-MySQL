@@ -17,6 +17,7 @@ $monthYear = date(
 $secondQuery = "UPDATE monthly_income SET month_year = DATE_ADD('$monthYear', INTERVAL 1 DAY), gross_income = '$grossIncome' WHERE employee_id = '$employeeId'";
 
 if ($connection->query($secondQuery)) {
+    include_once "loadSalaries.php";
     $output = "Data Successfully Updated";
 } else {
     $output = "Something failed";
