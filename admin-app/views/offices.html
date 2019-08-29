@@ -4,7 +4,7 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md m-3"
+    class="btn btn-primary btn-md"
     role="button"
     ng-click="redirectTo()"
     >Back</a
@@ -12,13 +12,13 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md "
+    class="btn btn-primary btn-md m-3"
     role="button"
     ng-click="showInput()"
     >Add New Office</a
   >
   <div ng-show="visible">
-    <form>
+    <form name="form">
       <div class="form-group">
         <label for="officeName">Office Name</label>
         <input
@@ -26,11 +26,13 @@
           class="form-control"
           id="officeName"
           ng-model="officeName"
+          required
         />
         <button
           type="submit"
           class="btn btn-primary my-2"
           ng-click="addOffice(officeName)"
+          ng-disabled="form.$invalid"
         >
           Done
         </button>
@@ -59,29 +61,32 @@
       ng-repeat="office in data | orderBy:'-office_id' | filter:search as results"
     >
       <td>{{ office.office_name }}</td>
-      <form>
+      <form name="form">
         <div class="form-group">
+          <label for="name"></label>
           <td>
             <input
               type="text"
               class="form-control"
+              name="officeName"
               id="name"
               ng-model="office.name"
               placeholder="Update Office Name"
               required
             />
           </td>
-          <td>
-            <button
-              type="submit"
-              class="btn btn-primary btn-sm"
-              ng-click="updateOffice(office)"
-            >
-              Update
-            </button>
-          </td>
         </div>
       </form>
+      <td>
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm"
+          ng-click="updateOffice(office)"
+          ng-disabled="officeName.$invalid"
+        >
+          Update
+        </button>
+      </td>
 
       <td>
         <button

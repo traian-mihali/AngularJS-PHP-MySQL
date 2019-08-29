@@ -48,7 +48,7 @@ function OfficesController(
         $scope.data = data;
       });
     } else {
-      alert("No Value provided");
+      alert("The Office name was not provided");
     }
   };
 
