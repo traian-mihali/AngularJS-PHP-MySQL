@@ -38,10 +38,11 @@ function EmployeeFormController(
       last_name: $scope.employee.last_name,
       email: $scope.employee.email,
       birthdate: $scope.employee.birthdate,
-      is_manager: manager,
       office_id: office.office_id,
       department_id: department.department_id
     };
+
+    body.is_manager = "Yes" ? 1 : 0;
 
     insertData.insert("services/php/insertEmployee.php", body).then(data => {
       if (data.error) {

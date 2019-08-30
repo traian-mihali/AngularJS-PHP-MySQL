@@ -33,10 +33,10 @@
         class="form-control"
         id="offices"
       >
-        <option value=""></option>
         <option ng-repeat="office in offices | filter:search as results">{{
           office.office_name
         }}</option>
+        <option value=""></option>
       </select>
     </div>
   </form>

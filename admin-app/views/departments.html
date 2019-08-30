@@ -35,7 +35,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="d in data | filter:search">
+    <tr ng-repeat="d in data | filter:search as results">
       <td>{{ d.name | ifnull }}</td>
       <td>
         <select class="custom-select">
