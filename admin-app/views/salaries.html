@@ -113,8 +113,8 @@
         <button
           class="btn btn-primary btn-sm"
           ng-click="redirectTo(salary.employee_id)"
+          ng-disabled="!salary.monthly_income_id"
         >
-          <!-- ng-disabled="!salary.monthly_income_id" -->
           Update
         </button>
       </td>

@@ -22,21 +22,23 @@ function OfficesController(
     $scope.data = data;
   });
 
-  $scope.addOffice = function(officeName) {
+  $scope.addOffice = function(office) {
     insertData
       .insert("services/php/insertData.php", {
         table: "offices",
         key: "office_name",
-        value: officeName
+        value: office.officeName
       })
       .then(data => {
         $scope.visible = false;
         $scope.data = data;
-        $scope.officeName = "";
+        $scope.office = null;
       });
   };
 
   $scope.updateOffice = function(office) {
+    console.log("OFFICE", office);
+
     if (office.name) {
       let body = {};
       body.table = "offices";

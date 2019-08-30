@@ -51,9 +51,16 @@ function SalariesController($scope, $location, loadData, insertData) {
         60
       ).toFixed(2);
 
+    let employee = $scope.employees.find(
+      employee => employee.full_name === $scope.salary.employee
+    );
+
+    $scope.salary.employeeId = employee.employee_id;
+
     insertData
       .insert("services/php/insertSalaries.php", $scope.salary)
       .then(data => {
+        console.log("[RESPONSE] data", data);
         $scope.visible = false;
         $scope.data = data;
         $scope.calculeNetIncome();
