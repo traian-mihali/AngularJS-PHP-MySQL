@@ -19,7 +19,7 @@ $office_id = $data->office_id;
 $department_id = $data->department_id;
 
 
-$query = "INSERT INTO employees (first_name, last_name, email, birthdate, is_manager, office_id, department_id) VALUES ('$first_name', '$last_name', '$email', '$birthdate', '$manager', '$office_id', '$department_id')";
+$query = "INSERT INTO employees (first_name, last_name, email, birthdate, is_manager, office_id, department_id) VALUES ('$first_name', '$last_name', '$email', DATE_ADD('$birthdate', INTERVAL +1 DAY), '$manager', '$office_id', '$department_id')";
 
 $output = new stdClass();
 if ($connection->query($query)) {

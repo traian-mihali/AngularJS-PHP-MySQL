@@ -25,19 +25,20 @@
           type="text"
           class="form-control"
           id="officeName"
-          ng-model="officeName"
+          ng-model="office.officeName"
+          name="officeName"
           required
         />
-        <button
-          type="submit"
-          class="btn btn-primary my-2"
-          ng-click="addOffice(officeName)"
-          ng-disabled="form.$invalid"
-        >
-          Done
-        </button>
       </div>
     </form>
+    <button
+      type="submit"
+      class="btn btn-primary my-2"
+      ng-click="addOffice(office)"
+      ng-disabled="form.$invalid"
+    >
+      Done
+    </button>
   </div>
 </div>
 
@@ -68,8 +69,7 @@
             <input
               type="text"
               class="form-control"
-              name="officeName"
-              id="name"
+              name="name"
               ng-model="office.name"
               placeholder="Update Office Name"
               required
@@ -82,7 +82,7 @@
           type="submit"
           class="btn btn-primary btn-sm"
           ng-click="updateOffice(office)"
-          ng-disabled="officeName.$invalid"
+          ng-disabled="form.$invalid"
         >
           Update
         </button>

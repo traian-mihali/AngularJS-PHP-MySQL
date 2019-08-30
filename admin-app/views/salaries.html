@@ -76,7 +76,7 @@
         type="submit"
         class="btn btn-primary my-2"
         ng-disabled="form.$invalid"
-        ng-click="addSalary(salary)"
+        ng-click="addSalary()"
       >
         Done
       </button>
@@ -94,10 +94,10 @@
 <table class="table" ng-show="data">
   <thead>
     <tr>
-      <th scope="col">Month - Year</th>
+      <th scope="col">Employee</th>
       <th scope="col">Gross Income</th>
       <th scope="col">Net Income</th>
-      <th scope="col">Employee</th>
+      <th scope="col">Date</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -105,16 +105,16 @@
     <tr
       ng-repeat="salary in data  | orderBy:'-monthly_income_id' | filter:search as results"
     >
-      <td>{{ salary.month_year | date | ifnull }}</td>
+      <td>{{ salary.full_name }}</td>
       <td>{{ salary.gross_income | currency: $ | ifnull }}</td>
       <td>{{ salary.netIncome | currency: $ | ifnull }}</td>
-      <td>{{ salary.full_name }}</td>
+      <td>{{ salary.month_year | date | ifnull }}</td>
       <td>
         <button
           class="btn btn-primary btn-sm"
           ng-click="redirectTo(salary.employee_id)"
-          ng-disabled="!salary.monthly_income_id"
         >
+          <!-- ng-disabled="!salary.monthly_income_id" -->
           Update
         </button>
       </td>

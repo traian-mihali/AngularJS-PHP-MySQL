@@ -19,15 +19,6 @@ if ($result) {
     $employeeId = implode('|', $result);
     $secondQuery = "INSERT INTO monthly_income (month_year, gross_income, employee_id) VALUES (DATE_ADD('$monthYear', INTERVAL 1 DAY), '$grossIncome', '$employeeId')";
     if ($connection->query($secondQuery)) {
-        include "loadSalaries.php";
-
-        $output = "Data Successfully Inserted";
-    } else {
-        $output = "Something failed";
+        include_once "loadSalaries.php";
     }
-} else {
-    $output = "Employee Not Found";
 }
-
-
-echo json_encode($output);

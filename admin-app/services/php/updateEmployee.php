@@ -21,7 +21,7 @@ $office_id = $data->office_id;
 $department_id = $data->department_id;
 
 
-$query = "UPDATE employees SET first_name = '$first_name', last_name = '$last_name', email = '$email', birthdate = DATE_ADD('$birthdate', INTERVAL 1 DAY), is_manager = '$manager', office_id = '$office_id', department_id = '$department_id' WHERE employee_id = '$employee_id'";
+$query = "UPDATE employees SET first_name = '$first_name', last_name = '$last_name', email = '$email', birthdate = '$birthdate', is_manager = '$manager', office_id = '$office_id', department_id = '$department_id' WHERE employee_id = '$employee_id'";
 
 $output = new stdClass();
 if ($connection->query($query)) {

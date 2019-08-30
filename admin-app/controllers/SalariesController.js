@@ -29,17 +29,13 @@ function SalariesController($scope, $location, loadData, insertData) {
       $scope.employees = data;
     });
 
-  $scope.getNetIncome = function(gross) {
-    return (gross * 60) / (100).toFixed(2);
-  };
-
   $scope.calculeNetIncome = function() {
-    if ($scope && $scope.data) {
-      for (let salary of $scope.data) {
-      }
+    if ($scope.data) {
       $scope.data.forEach(salary => {
         salary.netIncome = ((salary.gross_income * 60) / 100).toFixed(2);
       });
+    } else {
+      $scope.salary.netIncome = null;
     }
   };
 
