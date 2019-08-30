@@ -14,7 +14,7 @@ $query = 'SELECT
 FROM employees 
 LEFT JOIN departments d USING(department_id)
 LEFT JOIN offices o USING (office_id)
-ORDER BY employee_id ASC';
+ORDER BY employee_id DESC';
 
 $output = $connection->query($query)->fetchAll();
 

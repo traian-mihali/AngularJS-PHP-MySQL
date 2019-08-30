@@ -102,9 +102,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr
-      ng-repeat="salary in data  | orderBy:'-monthly_income_id' | filter:search as results"
-    >
+    <tr ng-repeat="salary in data | filter:search as results">
       <td>{{ salary.full_name }}</td>
       <td>{{ salary.gross_income | currency: $ | ifnull }}</td>
       <td>{{ salary.netIncome | currency: $ | ifnull }}</td>

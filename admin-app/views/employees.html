@@ -41,9 +41,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr
-      ng-repeat="employee in data | orderBy:'-employee_id' | filter:search as results "
-    >
+    <tr ng-repeat="employee in data | filter:search as results ">
       <td>{{ employee.first_name }}</td>
       <td>{{ employee.last_name }}</td>
       <td>{{ employee.email }}</td>
