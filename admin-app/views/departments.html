@@ -4,7 +4,7 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md"
+    class="btn btn-primary btn-md my-3"
     role="button"
     ng-click="redirectTo('/preview')"
     >Back</a
@@ -13,50 +13,9 @@
     href=""
     class="btn btn-primary btn-md m-3"
     role="button"
-    ng-click="showInput()"
+    ng-click="redirectTo('/departments/new')"
     >Add New Department</a
   >
-
-  <div ng-show="visible">
-    <form name="form">
-      <div class="form-group">
-        <label for="departmentName">Department Name</label>
-        <input
-          type="text"
-          id="departmentName"
-          class="form-control"
-          ng-model="department.name"
-          name="department"
-          placeholder="Enter the Department"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="offices">Select multiple options with CTRL or SHIFT</label>
-        <select
-          ng-model="department.offices"
-          multiple
-          name="office"
-          class="form-control"
-          id="offices"
-        >
-          <option value=""></option>
-          <option
-            ng-repeat="office in offices | orderBy:'-department_id' | filter:search as results"
-            >{{ office.office_name }}</option
-          >
-        </select>
-      </div>
-    </form>
-    <button
-      type="submit"
-      ng-click="addDepartment(department)"
-      class="btn btn-primary my-2"
-      ng-disabled="form.$invalid"
-    >
-      Done
-    </button>
-  </div>
 </div>
 
 <input
@@ -76,9 +35,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr
-      ng-repeat="d in data | orderBy:'-department_id' | filter:search as results"
-    >
+    <tr ng-repeat="d in data | filter:search">
       <td>{{ d.name | ifnull }}</td>
       <td>
         <select class="custom-select">

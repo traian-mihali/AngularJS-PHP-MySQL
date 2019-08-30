@@ -4,53 +4,53 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md"
+    class="btn btn-primary btn-md my-3"
     role="button"
     ng-click="redirectTo('/salaries')"
     >Back</a
   >
-</div>
 
-<form ng-submit="updateSalary()">
-  <div class="form-row">
-    <div class="col-md-12 mb-3">
-      <label for="monthYear">Month - Year</label>
-      <input
-        type="month"
-        name="monthYear"
-        id="monthYear"
-        class="form-control"
-        ng-model="salary.monthYear"
-      />
+  <form ng-submit="updateSalary()">
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label for="monthYear">Month - Year</label>
+        <input
+          type="month"
+          name="monthYear"
+          id="monthYear"
+          class="form-control"
+          ng-model="salary.monthYear"
+        />
+      </div>
+      <div class="col-md-12 mb-3">
+        <label for="grossIncome">Add Monthly Gross Income</label>
+        <input
+          type="text"
+          name="grossIncome"
+          id="grossIncome"
+          class="form-control"
+          ng-model="salary.grossIncome"
+        />
+      </div>
+      <div class="col-md-12 mb-3">
+        <label for="netIncome">Add Monthly Net Income</label>
+        <input
+          name="netIncome"
+          type="text"
+          id="netIncome"
+          class="form-control"
+          ng-model="salary.netIncome"
+        />
+      </div>
+      <div class="col-md-12 mb-3">
+        <button
+          type="submit"
+          class="btn btn-primary my-2"
+          ng-disabled="!salary.netIncome && !salary.grossIncome"
+        >
+          Update
+        </button>
+      </div>
     </div>
-    <div class="col-md-12 mb-3">
-      <label for="grossIncome">Add Monthly Gross Income</label>
-      <input
-        type="text"
-        name="grossIncome"
-        id="grossIncome"
-        class="form-control"
-        ng-model="salary.grossIncome"
-      />
-    </div>
-    <div class="col-md-12 mb-3">
-      <label for="netIncome">Add Monthly Net Income</label>
-      <input
-        name="netIncome"
-        type="text"
-        id="netIncome"
-        class="form-control"
-        ng-model="salary.netIncome"
-      />
-    </div>
-    <div class="col-md-12 mb-3">
-      <button
-        type="submit"
-        class="btn btn-primary my-2"
-        ng-disabled="!salary.netIncome && !salary.grossIncome"
-      >
-        Update
-      </button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>

@@ -22,18 +22,20 @@ function DepartmentsController(
     }
   };
 
+  $scope.handleClick = function() {
+    return $scope.departmentId
+      ? $scope.updateDepartment($scope.department)
+      : $scope.addDepartment($scope.department);
+  };
+
   $scope.extractOfficeIds = function(department, offices) {
     const officeIds = [];
     for (let data of offices) {
-      if (department.offices.includes(data.office_name)) {
+      if (department.offices && department.offices.includes(data.office_name)) {
         officeIds.push(data.office_id);
       }
     }
     return officeIds;
-  };
-
-  $scope.showInput = function() {
-    $scope.visible = !$scope.visible;
   };
 
   $scope.mapDataToView = function(data) {
@@ -57,7 +59,9 @@ function DepartmentsController(
       filteredData[data.department_id] = data;
     });
 
-    return Object.values(filteredData);
+    return Object.values(filteredData).sort(
+      (a, b) => b.department_id - a.department_id
+    );
   };
 
   loadData
@@ -65,6 +69,11 @@ function DepartmentsController(
     .then(data => {
       console.log("[RESPONSE] DATA LOADED -> ", data);
       $scope.data = $scope.mapDataToView(data);
+      console.log("scope.data -> ", $scope.data);
+
+      $scope.department = $scope.data.find(
+        department => department.department_id === $scope.departmentId
+      );
     });
 
   loadData.load("services/php/loadData.php", "offices").then(data => {
@@ -74,14 +83,14 @@ function DepartmentsController(
   $scope.addDepartment = function(department) {
     department.officeIds = $scope.extractOfficeIds(department, $scope.offices);
 
-    console.log("[INPUT] DEPARTMENT INSERT -> ", department);
+    console.log("[INPUT] DEPARTMENT BEFORE INSERT -> ", department);
     insertData
       .insert("services/php/insertDepartment.php", department)
       .then(data => {
         console.log("[RESPONSE] DATA ON INSERT -> ", data);
-        $scope.data = $scope.mapDataToView(data);
+        $scope.data = data;
         $scope.department = null;
-        $scope.visible = false;
+        $location.path("/departments");
       });
   };
 
@@ -93,21 +102,22 @@ function DepartmentsController(
         value: departmentId
       })
       .then(data => {
-        console.log("[RESPONSE] DATA ON DELET -> ", data);
+        console.log("[RESPONSE] DATA ON DELETE -> ", data);
         $scope.data = $scope.mapDataToView(data);
       });
   };
 
   $scope.updateDepartment = function(department) {
+    department.officeIds = $scope.extractOfficeIds(department, $scope.offices);
     department.departmentId = $scope.departmentId;
-    console.log("[INPUT] DEPARTMENT BEFORE UPDATE", department);
 
+    console.log("[INPUT] DEPARTMENT BEFORE UPDATE", department);
     updateData
       .update("services/php/updateDepartment.php", department)
-
       .then(data => {
         console.log("[RESPONSE] DATA ON UPDATE -> ", data);
-        $scope.data = $scope.mapDataToView(data);
+        $scope.data = data;
+        $scope.department = null;
         $location.path("/departments");
       });
   };

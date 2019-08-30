@@ -4,126 +4,126 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md"
+    class="btn btn-primary btn-md my-3"
     role="button"
     ng-click="redirectTo('/employees')"
     >Back</a
   >
-</div>
 
-<form name="employeeForm" ng-submit="submit()" novalidate>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="firstname">First name</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="First Name"
-        name="firstname"
-        ng-model="employee.first_name"
-        required
-      />
-    </div>
-
-    <div class="col-md-6 mb-3">
-      <label for="lastname">Last name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="lastname"
-        placeholder="Last Name"
-        name="lastname"
-        ng-model="employee.last_name"
-        required
-      />
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="col-md-8 mb-3">
-      <label for="email">Email</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupPrepend">@</span>
-        </div>
+  <form name="employeeForm" ng-submit="submit()" novalidate>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="firstname">First name</label>
         <input
           type="text"
           class="form-control"
-          placeholder="Email"
-          name="email"
-          ng-model="employee.email"
+          placeholder="First Name"
+          name="firstname"
+          ng-model="employee.first_name"
+          required
+        />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="lastname">Last name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastname"
+          placeholder="Last Name"
+          name="lastname"
+          ng-model="employee.last_name"
           required
         />
       </div>
     </div>
 
-    <div class="col-md-4 mb-3">
-      <label for="Birthdate">Birthdate</label>
-      <input
-        type="date"
-        class="form-control"
-        name="birthdate"
-        placeholder="Birthdate"
-        ng-model="employee.birthdate"
-        required
-      />
-    </div>
-  </div>
+    <div class="form-row">
+      <div class="col-md-8 mb-3">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            name="email"
+            ng-model="employee.email"
+            required
+          />
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="col-md-8 mb-3">
-      <label for="departments">Departments</label>
-      <select
-        id="departments"
-        ng-model="employee.name"
-        class="custom-select"
-        required
+      <div class="col-md-4 mb-3">
+        <label for="Birthdate">Birthdate</label>
+        <input
+          type="date"
+          class="form-control"
+          name="birthdate"
+          placeholder="Birthdate"
+          ng-model="employee.birthdate"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-8 mb-3">
+        <label for="departments">Departments</label>
+        <select
+          id="departments"
+          ng-model="employee.name"
+          class="custom-select"
+          required
+        >
+          <option value=""></option>
+          <option ng-repeat="department in departments track by $index">{{
+            department.name
+          }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label for="manager">Manager</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Yes/No"
+          ng-model="employee.is_manager"
+          name="manager"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label for="offices">Offices</label>
+        <select
+          required
+          id="offices"
+          ng-model="employee.office_name"
+          class="custom-select"
+        >
+          <option value=""></option>
+          <option ng-repeat="office in offices track by $index ">{{
+            office.office_name
+          }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" ng-show="error">{{ error }}</div>
+    <div class="form-row">
+      <button
+        class="btn btn-primary col-md-12 mb-3"
+        type="submit"
+        ng-disabled="employeeForm.$invalid"
       >
-        <option value=""></option>
-        <option ng-repeat="department in departments track by $index">{{
-          department.name
-        }}</option>
-      </select>
+        Submit
+      </button>
     </div>
-
-    <div class="col-md-4 mb-3">
-      <label for="manager">Manager</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Yes/No"
-        ng-model="employee.is_manager"
-        name="manager"
-        required
-      />
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="col-md-12 mb-3">
-      <label for="offices">Offices</label>
-      <select
-        required
-        id="offices"
-        ng-model="employee.office_name"
-        class="custom-select"
-      >
-        <option value=""></option>
-        <option ng-repeat="office in offices track by $index ">{{
-          office.office_name
-        }}</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="alert alert-danger" ng-show="error">{{ error }}</div>
-  <div class="form-row">
-    <button
-      class="btn btn-primary col-md-12 mb-3"
-      type="submit"
-      ng-disabled="employeeForm.$invalid"
-    >
-      Submit
-    </button>
-  </div>
-</form>
+  </form>
+</div>

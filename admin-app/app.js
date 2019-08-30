@@ -32,13 +32,13 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: "views/departmentForm.html",
       controller: "controllers/DepartmentsController"
     })
-    .when("/employees", {
-      templateUrl: "views/employees.html",
-      controller: "controllers/EmployeesController"
-    })
     .when("/employees/new", {
       templateUrl: "views/employeeForm.html",
       controller: "controllers/EmployeeFormController"
+    })
+    .when("/employees", {
+      templateUrl: "views/employees.html",
+      controller: "controllers/EmployeesController"
     })
     .when("/employees/:id", {
       templateUrl: "views/employeeForm.html",

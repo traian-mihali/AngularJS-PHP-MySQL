@@ -11,83 +11,83 @@
       >Login</a
     >
   </p>
-</div>
 
-<div>
-  <form name="registerForm" ng-submit="submitRegisterForm()" novalidate>
-    <div class="form-group">
-      <label for="email">Username</label
-      ><input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        ng-model="register.email"
-        placeholder="Enter your email"
-        required
-      />
-      <div
-        class="alert alert-danger"
-        ng-show="registerForm.email.$dirty && registerForm.email.$invalid"
-      >
-        Email is required
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        name="password"
-        ng-model="register.password"
-        placeholder="Enter your password"
-        ng-minlength="5"
-        required
-      />
-      <div class="true">
+  <div>
+    <form name="registerForm" ng-submit="submitRegisterForm()" novalidate>
+      <div class="form-group">
+        <label for="email">Username</label
+        ><input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          ng-model="register.email"
+          placeholder="Enter your email"
+          required
+        />
         <div
           class="alert alert-danger"
-          ng-show="registerForm.password.$dirty && registerForm.password.$invalid && !registerForm.password.$error.minlength"
+          ng-show="registerForm.email.$dirty && registerForm.email.$invalid"
         >
-          Password is required
+          Email is required
         </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          ng-model="register.password"
+          placeholder="Enter your password"
+          ng-minlength="5"
+          required
+        />
+        <div class="true">
+          <div
+            class="alert alert-danger"
+            ng-show="registerForm.password.$dirty && registerForm.password.$invalid && !registerForm.password.$error.minlength"
+          >
+            Password is required
+          </div>
+          <div
+            class="alert alert-danger"
+            ng-show="registerForm.password.$dirty && registerForm.password.$error.minlength"
+          >
+            Password must be at least 5 characters long
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label
+        ><input
+          type="name"
+          class="form-control"
+          id="name"
+          name="name"
+          ng-model="register.name"
+          placeholder="Enter your name"
+          required
+        />
         <div
           class="alert alert-danger"
-          ng-show="registerForm.password.$dirty && registerForm.password.$error.minlength"
+          ng-show="registerForm.name.$dirty && registerForm.name.$invalid"
         >
-          Password must be at least 5 characters long
+          Name is required
+        </div>
+        <div class="alert alert-danger" ng-show="invalidSubmit">
+          Email is already in use
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="name">Name</label
-      ><input
-        type="name"
-        class="form-control"
-        id="name"
-        name="name"
-        ng-model="register.name"
-        placeholder="Enter your name"
-        required
-      />
-      <div
-        class="alert alert-danger"
-        ng-show="registerForm.name.$dirty && registerForm.name.$invalid"
+      <button
+        type="submit"
+        class="btn btn-primary"
+        ng-disabled="registerForm.$invalid"
       >
-        Name is required
-      </div>
-      <div class="alert alert-danger" ng-show="invalidSubmit">
-        Email is already in use
-      </div>
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      ng-disabled="registerForm.$invalid"
-    >
-      Submit
-    </button>
-  </form>
+        Submit
+      </button>
+    </form>
+  </div>
 </div>

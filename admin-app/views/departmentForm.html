@@ -4,49 +4,48 @@
 
   <a
     href=""
-    class="btn btn-primary btn-md"
+    class="btn btn-primary btn-md my-3"
     role="button"
     ng-click="redirectTo('/departments')"
     >Back</a
   >
-</div>
 
-<form name="employeeForm">
-  <div class="form-group">
-    <label for="departmentName">Department Name</label>
-    <input
-      type="text"
-      id="departmentName"
-      class="form-control"
-      ng-model="department.name"
-      name="department"
-      required
-    />
-  </div>
-  <div class="form-group">
-    <label for="offices"
-      >Select extra Offices or remove the ones already selected</label
-    >
-    <select
-      ng-model="department.offices"
-      multiple
-      name="office"
-      class="form-control"
-      id="offices"
-    >
-      <option value=""></option>
-      <option
-        ng-repeat="office in offices | orderBy:'-department_id' | filter:search as results"
-        >{{ office.office_name }}</option
+  <form name="employeeForm">
+    <div class="form-group">
+      <label for="departmentName">Department Name</label>
+      <input
+        type="text"
+        id="departmentName"
+        class="form-control"
+        ng-model="department.name"
+        name="department"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="offices"
+        >Select extra Offices or remove the ones already selected</label
       >
-    </select>
-  </div>
-</form>
-<button
-  type="submit"
-  class="btn btn-primary my-2"
-  ng-click="updateDepartment(department)"
-  ng-disabled="employeeForm.$invalid"
->
-  Update
-</button>
+      <select
+        ng-model="department.offices"
+        multiple
+        name="office"
+        class="form-control"
+        id="offices"
+      >
+        <option value=""></option>
+        <option ng-repeat="office in offices | filter:search as results">{{
+          office.office_name
+        }}</option>
+      </select>
+    </div>
+  </form>
+  <button
+    type="submit"
+    class="btn btn-primary my-2"
+    ng-click="handleClick()"
+    ng-disabled="employeeForm.$invalid"
+  >
+    Update
+  </button>
+</div>
