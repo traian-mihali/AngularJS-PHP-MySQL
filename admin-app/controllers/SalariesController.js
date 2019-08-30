@@ -20,13 +20,8 @@ function SalariesController($scope, $location, loadData, insertData) {
     .load("services/php/loadSalaries.php", "monthly_income")
     .then(data => {
       $scope.data = data;
+      console.log($scope.data);
       $scope.calculeNetIncome();
-    });
-
-  loadData
-    .load("services/php/loadEmployeesWithoutASalary.php", "employees")
-    .then(data => {
-      $scope.employees = data;
     });
 
   $scope.calculeNetIncome = function() {
@@ -51,7 +46,7 @@ function SalariesController($scope, $location, loadData, insertData) {
         60
       ).toFixed(2);
 
-    let employee = $scope.employees.find(
+    let employee = $scope.data.find(
       employee => employee.full_name === $scope.salary.employee
     );
 

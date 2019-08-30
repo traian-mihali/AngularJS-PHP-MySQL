@@ -2,13 +2,7 @@ angular
   .module("MyAdmin")
   .controller("controllers/EmployeeFormController", EmployeeFormController);
 
-function EmployeeFormController(
-  $scope,
-  $routeParams,
-  $location,
-  loadData,
-  insertData
-) {
+function EmployeeFormController($scope, $location, loadData, insertData) {
   $scope.redirectTo = function(path) {
     $location.path(path);
   };
