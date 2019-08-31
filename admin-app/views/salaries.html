@@ -29,6 +29,7 @@
             id="monthYear"
             class="form-control"
             ng-model="salary.monthYear"
+            ng-change="hideErrorMessages()"
             required
           />
         </div>
@@ -40,11 +41,12 @@
             id="salary.employee"
             class="form-control"
             ng-model="salary.employee"
+            ng-change="hideErrorMessages()"
             required
           >
             <option value=""></option>
-            <option ng-repeat="employee in data track by $index">{{
-              employee.full_name
+            <option ng-repeat="employee in employees track by $index">{{
+              employee.first_name + " " + employee.last_name
             }}</option>
           </select>
         </div>
@@ -58,6 +60,7 @@
             name="grossIncome"
             id="grossIncome"
             class="form-control"
+            ng-change="hideErrorMessages()"
             ng-model="salary.grossIncome"
           />
         </div>
@@ -68,6 +71,7 @@
             type="text"
             id="netIncome"
             class="form-control"
+            ng-change="hideErrorMessages()"
             ng-model="salary.netIncome"
           />
         </div>
@@ -75,11 +79,17 @@
       <button
         type="submit"
         class="btn btn-primary my-2"
-        ng-disabled="form.$invalid"
+        ng-disabled="form.$invalid || duplicateDate || invalidSalaryAmount"
         ng-click="addSalary()"
       >
         Done
       </button>
+      <div class="alert alert-danger" ng-show="duplicateDate">
+        The salary for the selected user is already set for the specified date.
+      </div>
+      <div class="alert alert-danger" ng-show="invalidSalaryAmount">
+        Please specify a valid salary.
+      </div>
     </form>
   </div>
 </div>
@@ -110,7 +120,7 @@
       <td>
         <button
           class="btn btn-primary btn-sm"
-          ng-click="redirectTo(salary.employee_id)"
+          ng-click="redirectTo(salary.monthly_income_id)"
           ng-disabled="!salary.monthly_income_id"
         >
           Update

@@ -18,26 +18,24 @@ function SalaryFormController(
     }
   };
 
-  $scope.employeeId = parseInt($routeParams.id);
+  $scope.monthly_income_id = parseInt($routeParams.id);
 
   loadData
     .load("services/php/loadSalaries.php", "monthly_income")
     .then(data => {
-      $scope.salary = data;
-      console.log("load salary data -> $scope.salary", $scope.salary);
+      $scope.data = data;
+      console.log("[loadSalaries.php RESPONSE]", $scope.data);
 
       $scope.salary = data.find(
-        salary => salary.employee_id === $scope.employeeId
+        salary => salary.monthly_income_id === $scope.monthly_income_id
       );
 
       $scope.salary.monthYear = new Date($scope.salary.month_year);
       $scope.salary.grossIncome = $scope.salary.gross_income;
       $scope.salary.netIncome = (
-        ($scope.salary.grossIncome * 60) /
+        ($scope.salary.gross_income * 60) /
         100
       ).toFixed(2);
-
-      $scope.salary = $scope.salary;
     });
 
   $scope.getNetIncome = function(gross) {
@@ -57,10 +55,10 @@ function SalaryFormController(
         ? $scope.getGrossIncome($scope.salary.netIncome)
         : $scope.salary.grossIncome;
 
-    body.employeeId = $scope.employeeId;
+    body.monthly_income_id = $scope.monthly_income_id;
 
     updateData.update("services/php/updateSalary.php", body).then(data => {
-      console.log("data after update", data);
+      console.log("[updateSalary.php RESPONSE]", data);
       $scope.redirectTo("/salaries");
     });
   };

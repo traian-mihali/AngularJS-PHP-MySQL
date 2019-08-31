@@ -20,25 +20,62 @@ function SalariesController($scope, $location, loadData, insertData) {
     .load("services/php/loadSalaries.php", "monthly_income")
     .then(data => {
       $scope.data = data;
-      console.log($scope.data);
+      console.log("DATA FROM monthly_income -> ", $scope.data);
       $scope.calculeNetIncome();
     });
+
+  loadData.load("services/php/loadEmployees.php").then(data => {
+    $scope.employees = data;
+  });
 
   $scope.calculeNetIncome = function() {
     if ($scope.data) {
       $scope.data.forEach(salary => {
         salary.netIncome = ((salary.gross_income * 60) / 100).toFixed(2);
       });
-    } else {
-      $scope.salary.netIncome = null;
     }
+  };
+
+  $scope.hideErrorMessages = function() {
+    $scope.duplicateDate = false;
+    $scope.invalidSalaryAmount = false;
+  };
+
+  $scope.getSelectedEmployee = function() {
+    return $scope.employees.find(
+      employee =>
+        `${employee.first_name} ${employee.last_name}` ===
+        $scope.salary.employee
+    );
+  };
+
+  $scope.duplicateDatePerEmployee = function() {
+    let selectedEmployee = $scope.getSelectedEmployee();
+
+    $scope.data.forEach(employee => {
+      if (employee.employee_id === selectedEmployee.employee_id) {
+        let date = $scope.salary.monthYear.toDateString();
+        let splitDate = employee.month_year.split(" ");
+
+        if (
+          date.includes(splitDate[0]) &&
+          date.includes(splitDate[1].substring(0, 3))
+        ) {
+          $scope.duplicateDate = true;
+          return;
+        }
+      }
+    });
   };
 
   $scope.addSalary = function() {
     if (!$scope.salary.grossIncome && !$scope.salary.netIncome) {
-      alert("Please enter an amount");
+      $scope.invalidSalaryAmount = true;
       return;
     }
+
+    $scope.duplicateDatePerEmployee();
+    if ($scope.duplicateDate) return;
 
     if (!$scope.salary.grossIncome)
       $scope.salary.grossIncome = (
@@ -46,16 +83,14 @@ function SalariesController($scope, $location, loadData, insertData) {
         60
       ).toFixed(2);
 
-    let employee = $scope.data.find(
-      employee => employee.full_name === $scope.salary.employee
-    );
-
-    $scope.salary.employeeId = employee.employee_id;
+    let selectedEmployee = $scope.getSelectedEmployee();
+    $scope.salary.employeeId = selectedEmployee.employee_id;
 
     insertData
       .insert("services/php/insertSalaries.php", $scope.salary)
       .then(data => {
-        console.log("[RESPONSE] data", data);
+        console.log("[RESPONSE FROM insertSalaries.php]", data);
+        $scope.duplicateDate = false;
         $scope.visible = false;
         $scope.data = data;
         $scope.calculeNetIncome();
