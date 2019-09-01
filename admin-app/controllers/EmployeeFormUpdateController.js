@@ -16,35 +16,25 @@ function EmployeeFormUpdateController(
     $location.path(path);
   };
 
-  $scope.id = parseInt($routeParams.id);
+  $scope.employeeId = parseInt($routeParams.id);
 
-  loadData.load("services/php/loadData.php", "departments").then(data => {
-    $scope.departments = data;
-  });
-
-  loadData.load("services/php/loadData.php", "offices").then(data => {
-    $scope.offices = data;
+  loadData.load("services/php/loadOfficesPerDepartment.php").then(data => {
+    console.log("OFFICES PER DEPARTMENT", data);
+    $scope.departmentAndOffices = data;
   });
 
   loadData.load("/services/php/loadEmployees.php").then(data => {
-    $scope.employee = data.find(employee => employee.employee_id === $scope.id);
+    console.log("[RESPONSE] loadEmployees ->", data);
+    $scope.employee = data.find(
+      employee => employee.employee_id === $scope.employeeId
+    );
 
     $scope.employee.birthdate = new Date($scope.employee.birthdate);
     $scope.employee.is_manager =
       $scope.employee.is_manager === 0 ? "No" : "Yes";
-
-    $scope.employee = $scope.employee;
   });
 
   $scope.submit = function() {
-    let office = $scope.offices.find(
-      office => office.office_name === $scope.employee.office_name
-    );
-
-    let department = $scope.departments.find(
-      department => department.name === $scope.employee.name
-    );
-
     $scope.employee.is_manager =
       $scope.employee.is_manager.trim().toLowerCase() === "yes" ? 1 : 0;
 
@@ -55,8 +45,8 @@ function EmployeeFormUpdateController(
       email: $scope.employee.email,
       birthdate: $scope.employee.birthdate,
       is_manager: $scope.employee.is_manager,
-      office_id: office.office_id,
-      department_id: department.department_id
+      office_id: $scope.employee.office.office_id,
+      department_id: $scope.employee.department.department_id
     };
 
     updateData.update("services/php/updateEmployee.php", body).then(data => {

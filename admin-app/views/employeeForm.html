@@ -74,14 +74,12 @@
         <label for="departments">Departments</label>
         <select
           id="departments"
-          ng-model="employee.name"
+          ng-model="employee.department"
+          ng-options="department as department.name for department in departmentAndOffices track by department.department_id"
           class="custom-select"
           required
         >
-          <option value=""></option>
-          <option ng-repeat="department in departments track by $index">{{
-            department.name
-          }}</option>
+          <option value="">Select Department</option>
         </select>
       </div>
 
@@ -104,13 +102,11 @@
         <select
           required
           id="offices"
-          ng-model="employee.office_name"
+          ng-model="employee.office"
+          ng-options="office as office.office_name for office in employee.department.offices track by office.office_id"
           class="custom-select"
         >
           <option value=""></option>
-          <option ng-repeat="office in offices track by $index ">{{
-            office.office_name
-          }}</option>
         </select>
       </div>
     </div>
